@@ -21,15 +21,6 @@ public interface IGenericValidator {
     /**
      * Validates JSON against a given specification
      *
-     * @param jsonObject
-     *            the JSON as a object
-     * @return true JSON as string
-     */
-    public String ObjectToString(Object jsonObject);
-
-    /**
-     * Validates JSON against a given specification
-     *
      * @param json
      *            the JSON as a string
      * @return a validation result

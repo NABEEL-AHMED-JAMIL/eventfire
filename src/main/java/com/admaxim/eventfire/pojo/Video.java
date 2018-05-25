@@ -14,9 +14,8 @@ public class Video {
     private String h;
     private String w;
 
-
     public Video() {
-        log.info("Video-----Constructor");
+        log.info("Partner Id " + getPartnerId());
     }
 
     public String getVideoId() {

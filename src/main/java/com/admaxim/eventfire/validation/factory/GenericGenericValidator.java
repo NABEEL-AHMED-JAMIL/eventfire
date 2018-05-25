@@ -15,14 +15,14 @@ import java.io.IOException;
 
 public class GenericGenericValidator implements IGenericValidator {
 
-    private final JsonSchema schema;
+    private final JsonSchema jsonschema;
 
     public GenericGenericValidator(String schemaResource) {
 
         try {
             JsonSchemaFactory factory = JsonSchemaFactory.byDefault();
             JsonNode jsonNode = JsonLoader.fromResource(schemaResource);
-            schema = factory.getJsonSchema(jsonNode);
+            this.jsonschema = factory.getJsonSchema(jsonNode);
 
         }catch (IOException | ProcessingException e) {
             throw new IllegalStateException
@@ -40,17 +40,6 @@ public class GenericGenericValidator implements IGenericValidator {
 
     }
 
-    @Override
-    public String ObjectToString(Object jsonObject) {
-        String jsonString = "";
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            jsonString = mapper.writeValueAsString(jsonObject);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-        return jsonString;
-    }
 
     @Override
     public ValidationResult validate(String json) throws IOException {
@@ -60,11 +49,11 @@ public class GenericGenericValidator implements IGenericValidator {
 
     private final ValidationResult getValidationResult(JsonNode jsonNode) throws IOException {
         try {
-            ProcessingReport processingReport = schema.validate(jsonNode);
-            if (processingReport != null) {
+            ProcessingReport processingReport = this.jsonschema.validate(jsonNode);
+            if (processingReport.isSuccess()) {
                 return new ValidationResult(processingReport.isSuccess(), processingReport.toString());
             } else {
-                return new ValidationResult(false, null);
+                return new ValidationResult(processingReport.isSuccess(), processingReport.toString());
             }
         } catch (ProcessingException e) {
             throw new IOException(e.getMessage());

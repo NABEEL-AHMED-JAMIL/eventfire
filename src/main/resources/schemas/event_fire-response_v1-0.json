@@ -4,6 +4,13 @@
   "description": "json-schema for event fire request v1",
   "type": "object",
   "required": ["userId", "phone", "userName"],
+  "not": {
+    "allOf": [{
+      "required": ["role"]
+    }, {
+      "required": ["video"]
+    }]
+  },
   "additionalProperties": false,
   "properties": {
     "userId": {

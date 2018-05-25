@@ -9,15 +9,17 @@ public class User {
 
     private final static Logger log = LoggerFactory.getLogger(User.class);
 
-
     private String userId;
     private String userName;
     private String phone;
     private Role role;
     private Video video;
 
+    public static Integer count = 0;
+
     public User() {
-        log.info("Partner Id" );
+        log.info("===="+ (count++) +"====");
+        log.info("Partner Id " + getPartnerId());
     }
 
     public String getUserId() {

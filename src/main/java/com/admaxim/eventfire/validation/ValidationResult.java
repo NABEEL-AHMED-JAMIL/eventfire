@@ -39,8 +39,8 @@ public class ValidationResult {
     @Override
     public String toString() {
         return (new StringBuilder())
-                .append("valid=").append(valid)
-                .append("result=").append(result)
+                .append("valid= ").append(valid).append("\n")
+                .append("result= ").append(result)
                 .toString();
     }
 

@@ -7,14 +7,13 @@ import static com.admaxim.eventfire.pojo.Partner.getPartnerId;
 
 public class Role {
 
-
     private final static Logger log = LoggerFactory.getLogger(Role.class);
 
     private String roleId;
     private String name;
 
     public Role() {
-        log.info("Role--Constructor");
+        log.info("Partner Id " + getPartnerId());
     }
 
     public String getRoleId() {

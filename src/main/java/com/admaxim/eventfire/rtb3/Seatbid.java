@@ -1,4 +1,4 @@
-package com.admaxim.rtb.rtb3.pojo;
+package com.admaxim.eventfire.rtb3;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
