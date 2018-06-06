@@ -1,10 +1,12 @@
 package com.admaxim.eventfire.pojo;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import static com.admaxim.eventfire.pojo.Partner.getPartnerId;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Role {
 
     private final static Logger log = LoggerFactory.getLogger(Role.class);
@@ -34,11 +36,8 @@ public class Role {
         this.name = name;
     }
 
+
     @Override
-    public String toString() {
-        return "Role{" +
-                ", roleId='" + roleId + '\'' +
-                ", name='" + name + '\'' +
-                '}';
-    }
+    public String toString() { return "Role{" + ", roleId='" + roleId + '\'' + ", name='" + name + '\'' + '}'; }
+
 }

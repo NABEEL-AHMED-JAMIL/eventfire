@@ -1,48 +1,44 @@
-package com.admaxim.eventfire.validation.factory;
+package com.admaxim.eventfire.validation;
 
-import com.admaxim.eventfire.validation.ValidationResult;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.fge.jackson.JsonLoader;
 import com.github.fge.jsonschema.core.exceptions.ProcessingException;
 import com.github.fge.jsonschema.core.report.ProcessingReport;
 import com.github.fge.jsonschema.main.JsonSchema;
 import com.github.fge.jsonschema.main.JsonSchemaFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
 
 public class GenericGenericValidator implements IGenericValidator {
 
+    private final static Logger log = LoggerFactory.getLogger(GenericGenericValidator.class);
     private final JsonSchema jsonschema;
 
     public GenericGenericValidator(String schemaResource) {
-
         try {
+            log.info("Init.....schema....");
             JsonSchemaFactory factory = JsonSchemaFactory.byDefault();
             JsonNode jsonNode = JsonLoader.fromResource(schemaResource);
             this.jsonschema = factory.getJsonSchema(jsonNode);
 
         }catch (IOException | ProcessingException e) {
-            throw new IllegalStateException
-                    ("could not initialize validator due to previous exception", e);
+            throw new IllegalStateException("could not initialize validator due to previous exception", e);
         }
     }
 
-    @Override
-    public boolean isValid(String json) {
+    @Override public boolean isValid(String json) {
         try {
             return validate(json).isValid();
         }catch (IOException e) {
+            log.error("Error :- " + e.getMessage() + " valid status :- " + "false");
             return false;
         }
-
     }
 
-
-    @Override
-    public ValidationResult validate(String json) throws IOException {
+    @Override public ValidationResult validate(String json) throws IOException {
         JsonNode jsonNode = JsonLoader.fromString(json);
         return getValidationResult(jsonNode);
     }
@@ -56,6 +52,7 @@ public class GenericGenericValidator implements IGenericValidator {
                 return new ValidationResult(processingReport.isSuccess(), processingReport.toString());
             }
         } catch (ProcessingException e) {
+            log.error("Error :- " + e.getMessage());
             throw new IOException(e.getMessage());
         }
     }

@@ -29,24 +29,26 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/com.github.fge/json-schema-validator -->
+		<!--validator-->
 		<dependency>
-			<groupId>com.github.fge</groupId>
+			<groupId>com.github.java-json-tools</groupId>
 			<artifactId>json-schema-validator</artifactId>
-			<version>2.2.6</version>
+			<version>2.2.10</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/com.github.fge/jackson-coreutils -->
+		<!--json-lib-->
 		<dependency>
-			<groupId>com.github.fge</groupId>
-			<artifactId>jackson-coreutils</artifactId>
-			<version>1.8</version>
+			<groupId>net.sf.json-lib</groupId>
+			<artifactId>json-lib</artifactId>
+			<version>2.4</version>
+			<classifier>jdk15</classifier>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/com.github.fge/json-schema-core -->
+		<!--flex-json-->
 		<dependency>
-			<groupId>com.github.fge</groupId>
-			<artifactId>json-schema-core</artifactId>
-			<version>1.2.5</version>
+			<groupId>net.sf.flexjson</groupId>
+			<artifactId>flexjson</artifactId>
+			<version>2.1</version>
 		</dependency>
+		<!--test-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -67,6 +69,5 @@
 			</plugin>
 		</plugins>
 	</build>
-
 
 </project>

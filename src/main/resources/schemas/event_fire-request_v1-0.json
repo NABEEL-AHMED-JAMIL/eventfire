@@ -1,52 +1,50 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema",
-  "title": "event fire request v1",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "event-fire-schema-bid_request",
   "description": "json-schema for event fire request v1",
   "type": "object",
-  "required": ["userId", "phone", "userName"],
+  "required": ["userId", "phone", "userName", "imp"],
+  "not": {"allOf": [{"required": ["role"]}, {"required": ["video"]}]},
   "additionalProperties": false,
   "properties": {
-    "userId": {
-      "description": "userId required have null",
-      "type": "string"
-    },
-    "phone": {
-      "description": "phone required have null",
-      "type": "string"
-    },
-    "userName": {
-      "description": "userName required have null",
-      "type": "string"
-    },
+    "userId": { "description": "userId required have null", "type": "string" },
+    "phone": { "description": "phone required have null", "type": "string", "pattern": "\\d{10}|(?:\\d{3}-){2}\\d{4}|\\(\\d{3}\\)\\d{3}-?\\d{4}" },
+    "userName": { "description": "userName required have null", "type": "string", "maxLength": 25 },
+    "role": { "$ref": "#/definitions/role" },
+    "video": { "$ref": "#/definitions/video" },
+    "imp": { "$ref": "#/definitions/imp" }
+  },
+  "definitions": {
     "role": {
       "type": "object",
+      "description": "json-schema for event fire role object",
+      "additionalProperties": false,
       "required": ["roleId", "name"],
       "properties": {
-        "roleId": {
-          "description": "roleId required have null",
-          "type": "string"
-        },
-        "name": {
-          "description": "name required have null",
-          "type": "string"
-        }
-      }    },
+        "roleId": { "description": "roleId required have null", "type": "string"  },
+        "name": { "description": "name required have null", "type": "string" }
+      }
+    },
     "video": {
       "type": "object",
+      "description": "json-schema for event fire video object",
+      "additionalProperties": false,
       "required": ["videoId", "h", "w"],
       "properties": {
-        "videoId": {
-          "description": "videoId required have null",
-          "type": "string"
-        },
-        "h": {
-          "description": "h required have null",
-          "type": "string"
-        },
-        "w": {
-          "description": "w required have null",
-          "type": "string"
-        }
+        "videoId": { "description": "videoId required have null", "type": "string" },
+        "h": { "description": "h required have null", "type": "string" },
+        "w": { "description": "w required have null", "type": "string" }
+      }
+    },
+    "imp": {
+      "type": "object",
+      "description": "json-schema for event fire imp object",
+      "required": [ "id", "name", "xyz" ],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "description": "id required have null", "type": "string" },
+        "name": { "description": "name required have null", "type": "string" },
+        "xyz": { "description": "xyz require have null", "type": "string" }
       }
     }
   }

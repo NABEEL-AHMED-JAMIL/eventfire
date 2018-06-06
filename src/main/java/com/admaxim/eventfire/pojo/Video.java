@@ -1,11 +1,12 @@
 package com.admaxim.eventfire.pojo;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import static com.admaxim.eventfire.pojo.Partner.getPartnerId;
 
-
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Video {
 
     private final static Logger log = LoggerFactory.getLogger(Video.class);
@@ -22,7 +23,6 @@ public class Video {
         log.info("get-Video-Id");
         return videoId;
     }
-
     public void setVideoId(String videoId) {
         log.info("set-Video-Id");
         this.videoId = videoId + "_" + getPartnerId()  ;
@@ -48,11 +48,6 @@ public class Video {
 
 
     @Override
-    public String toString() {
-        return "Video{" +
-                ", videoId='" + videoId + '\'' +
-                ", h='" + h + '\'' +
-                ", w='" + w + '\'' +
-                '}';
-    }
+    public String toString() { return "Video{" + ", videoId='" + videoId + '\'' + ", h='" + h + '\'' + ", w='" + w + '\'' + '}'; }
+
 }

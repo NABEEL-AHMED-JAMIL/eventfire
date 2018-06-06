@@ -6,7 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,6 +20,9 @@ public class Cross implements Filter {
     //********************************
     //           Filter Config      //
     //********************************
+    private static Integer count = 0;
+    private Long before;
+
 
     @Autowired
     ValidatorService validatorService;
@@ -29,14 +31,14 @@ public class Cross implements Filter {
     public void init(FilterConfig filterConfig) throws ServletException { }
 
     @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
+            throws IOException, ServletException {
 
         try {
 
             // response
-            log.info("=================Request-Start=====================");
-            long before=System.currentTimeMillis();
-
+            log.info("=================Request-Start-"+(count++)+"-=====================");
+            before = System.currentTimeMillis();
             ReadHttpServletRequest requestWrapper = new ReadHttpServletRequest((HttpServletRequest) servletRequest);
 
             HttpServletResponse response = (HttpServletResponse) servletResponse;
@@ -45,27 +47,36 @@ public class Cross implements Filter {
             response.setHeader("Access-Control-Max-Age", "3600");
             response.setHeader("Access-Control-Allow-Headers", "X-requested-with, Content-Type");
 
-            // handle the rtb-request
-            if (requestWrapper.getBody() != null && requestWrapper.getHeader() != null) {
-                if (validatorService.isResponseValidator(requestWrapper.getBody(), requestWrapper.getHeader().equals("REQUEST")
-                                ? InputType.REQUEST : InputType.REQUEST)) {
+            String body = requestWrapper.getNewRequest();
+            String header = requestWrapper.getHeader();
+            if (body != null && header != null) {
+                /*
+                * Note:- This below line's first update the request and conver the imp's to imp by getting
+                * the single first index object. if the object is not their this will not process ad send the simple same
+                * json string for validation if the string valid then dofilter map the json into @Pojo.
+                * */
+                log.info("New:- "+"header " + header + ", body " + body);
+                if (validatorService.isResponseValidator(body, InputType.REQUEST.toString().equals("REQUEST") ? InputType.REQUEST : null)) {
                     filterChain.doFilter(requestWrapper, servletResponse);
                 } else {
-                    // error-have
+                    /*
+                    * Note:- IF Validator fail this will show error
+                    * if imp's size 0 then here
+                    * if imp's object not their then here
+                    * */
                     response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-                    response.getWriter().print("<html><head><title>Oops an error happened!</title></head>");
-                    response.getWriter().print("<body>Something bad happened uh-oh!</body>");
-                    response.getWriter().print(validatorService.showValidationResult());
-                    response.getWriter().println("</html>");
+                    String responseMessage = "{\"result\": \"Oops an error happened!\nSomething bad happened uh-oh!\"}";
+                    response.getWriter().print(responseMessage);
                 }
-                // handle the other request
             }
-            long after = System.currentTimeMillis();
-            log.info("Total response time -> (" + (after - before) + ") miliseconds");
-            log.info("=================Request-End=====================");
-
         }catch (NullPointerException e) {
             log.error("--Error--> "+ e.getMessage());
+            filterChain.doFilter(servletRequest, servletResponse);
+
+        }finally {
+            long result = System.currentTimeMillis() - before;
+            log.info("Total response time -> (" + (result) + ") miliseconds");
+            log.info("=================Request-End=====================");
         }
     }
 

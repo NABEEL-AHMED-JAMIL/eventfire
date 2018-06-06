@@ -1,15 +1,26 @@
 package com.admaxim.eventfire.pojo;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class Partner {
 
-    public static String partnerId;
+    private final static Logger log = LoggerFactory.getLogger(Partner.class);
 
-    public static String getPartnerId() {    return partnerId; }
+    protected static String partnerId;
+
+    public static String getPartnerId() {
+        log.info("get-ing partner-id");
+        return partnerId;
+    }
     public void setPartnerId(String partnerId) {
+        log.info("set-ing partner-id" + partnerId);
         this.partnerId = partnerId;
     }
 
+
     @Override
-    public String toString() {
-        return "Partner{" + "partnerId='" + partnerId + '\'' + '}';}
+    public String toString() { return "Partner{" + "partnerId='" + partnerId + '\'' + '}';}
+
 }
