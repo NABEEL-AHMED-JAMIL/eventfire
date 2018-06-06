@@ -1,6 +1,5 @@
 package com.admaxim.eventfire.pojo;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

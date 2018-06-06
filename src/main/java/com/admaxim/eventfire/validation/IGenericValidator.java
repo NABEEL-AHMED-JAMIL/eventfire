@@ -1,7 +1,5 @@
 package com.admaxim.eventfire.validation;
 
-import com.admaxim.eventfire.validation.ValidationResult;
-
 import java.io.IOException;
 
 /**

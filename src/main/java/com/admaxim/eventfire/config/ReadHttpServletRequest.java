@@ -1,10 +1,8 @@
 package com.admaxim.eventfire.config;
 
-import com.fasterxml.jackson.annotation.JsonAlias;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import net.sf.json.JSONSerializer;
-import netscape.javascript.JSException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
